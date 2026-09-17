@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -38,6 +38,10 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on for the repository if it is not already, instead of
+          # failing with "Get Pages site failed ... Not Found".
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
