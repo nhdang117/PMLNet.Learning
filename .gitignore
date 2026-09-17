@@ -1,0 +1,25 @@
+# Reference material (AVEVA proprietary docs + samples) - never published
+.ref/
+
+# Node / VitePress
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+*.log
+
+# .NET build output
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+
+# Binaries - AVEVA DLLs must never be committed
+*.dll
+*.pdb
+*.exe
+
+# OS
+Thumbs.db
+.DS_Store

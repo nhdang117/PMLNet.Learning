@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Shared settings for every PML .NET template.
+
+  AVEVA assemblies are referenced in place from the E3D installation folder.
+  Nothing is ever copied into the output, and no AVEVA DLL enters source control.
+
+  Override the install location by setting AVEVA_DESIGN_EXE before building:
+      set AVEVA_DESIGN_EXE=C:\AVEVA\Plant\Everything3D3.1\
+  (note the trailing backslash - that is how E3D's own evars.bat defines it)
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- E3D 3.1 hosts a 32-bit .NET Framework 4.7.2 CLR. Both are mandatory. -->
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <PlatformTarget>x86</PlatformTarget>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <LangVersion>7.3</LangVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+
+    <AvevaExe Condition=" '$(AVEVA_DESIGN_EXE)' != '' ">$(AVEVA_DESIGN_EXE)</AvevaExe>
+    <AvevaExe Condition=" '$(AvevaExe)' == '' ">C:\AVEVA\Plant\Everything3D3.1\</AvevaExe>
+    <ReferencePath>$(AvevaExe)</ReferencePath>
+
+    <!-- Where the built output is deployed. Keep it out of the installation folder. -->
+    <DeployDir Condition=" '$(DeployDir)' == '' ">C:\AVEVA\Custom\</DeployDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+</Project>

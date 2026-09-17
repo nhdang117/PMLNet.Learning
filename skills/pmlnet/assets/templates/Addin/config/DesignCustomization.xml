@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Your copy of the module customization file, registering your .uic.
+
+  Produce MyTools.uic from inside E3D: right-click a toolbar - Customize...,
+  create a command bar and a button, and set the button's command key to
+  "MyCompany.E3D.Addin.ShowElementInfo" so it matches Command.Key exactly.
+-->
+<UICustomizationSet xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <UICustomizationFiles>
+    <!-- ... all of the AVEVA entries, copied unchanged ... -->
+    <CustomizationFile Name="MyTools" Path="C:\AVEVA\Custom\MyTools.uic" />
+  </UICustomizationFiles>
+</UICustomizationSet>

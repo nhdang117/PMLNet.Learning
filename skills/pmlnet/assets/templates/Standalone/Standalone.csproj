@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\AVEVA.props" />
+
+  <PropertyGroup>
+    <ProjectGuid>{7A1F3C42-0C4B-4E35-9E2A-1B5D0C7A1005}</ProjectGuid>
+    <!-- The only template that is an executable -->
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyCompany.E3D.Reports</RootNamespace>
+    <AssemblyName>MyCompany.E3D.Reports</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Aveva.E3D.Standalone">
+      <HintPath>$(AvevaExe)Aveva.E3D.Standalone.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.Core.Database">
+      <HintPath>$(AvevaExe)Aveva.Core.Database.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.Core.Database.Filters">
+      <HintPath>$(AvevaExe)Aveva.Core.Database.Filters.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.Core.Utilities">
+      <HintPath>$(AvevaExe)Aveva.Core.Utilities.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <!--
+      Do NOT reference Aveva.ApplicationFramework* here. There is no
+      application framework in a standalone process.
+    -->
+
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="run.bat" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

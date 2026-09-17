@@ -1,0 +1,45 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  docs:
+    name: Docs build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # VitePress fails the build on dead internal links
+      - run: npm run docs:build
+
+  skill-assets:
+    name: Skill assets in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check
+        shell: pwsh
+        run: ./tools/sync-skill-assets.ps1 -Check
+
+  no-vendor-binaries:
+    name: No AVEVA binaries committed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan tracked files
+        run: |
+          found=$(git ls-files | grep -Ei '\.(dll|exe|pdb)$' || true)
+          if [ -n "$found" ]; then
+            echo "Binary files must not be committed:"
+            echo "$found"
+            exit 1
+          fi
+          echo "No binaries tracked."

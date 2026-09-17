@@ -1,0 +1,55 @@
+--
+--  csharpdatepicker.pmlfrm
+--
+--  Hosts the .NET DatePickerControl on a PML form.
+--
+--  Deploy to a folder on %PMLLIB%, then:
+--      pml rehash all
+--      show !!cSharpDatePicker
+--
+--  While editing this file (the DLL still needs an E3D restart):
+--      pml reload form !!cSharpDatePicker
+--
+
+setup form !!cSharpDatePicker dialog resize
+
+   import |C:\AVEVA\Custom\MyCompany.E3D.Controls|
+   handle ANY
+   endhandle
+
+   using namespace |MyCompany.E3D.Controls|
+
+   text .date width 15 is STRING
+   button .update |Update| at xmax ymin
+
+   -- PMLNETCONTROL marks the container as a host for a .NET user control
+   container .datePickerFrame NOBOX PMLNETCONTROL |date| width 22 height 2
+   member .datePicker is DATEPICKERCONTROL
+
+exit
+
+
+define method .cSharpDatePicker()
+
+   using namespace |MyCompany.E3D.Controls|
+
+   -- create the .NET object
+   !this.datePicker = object DATEPICKERCONTROL()
+
+   -- bind it into the container gadget
+   !this.datePickerFrame.control = !this.datePicker.handle()
+
+   -- wire the .NET event to a PML method taking one ARRAY
+   !this.datePicker.addeventhandler(|OnDatePicked|, !this, |datePicked|)
+
+   !this.update.callback = |!this.datePicker.setDate(!this.date.val)|
+
+endmethod
+
+
+define method .datePicked(!data is ARRAY)
+
+   -- !data[1] is the time, !data[2] is the date
+   !this.date.val = !data[2]
+
+endmethod

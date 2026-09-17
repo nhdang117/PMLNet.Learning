@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Your copy of the module addins file.
+
+  Start from the DesignAddins.xml in %AVEVA_DESIGN_EXE%, keep every AVEVA
+  entry, and append your own. Never edit AVEVA's file in place - a service
+  pack will overwrite it.
+
+  Entries are assembly names WITHOUT the .dll extension. A bare name resolves
+  against the executable folder; a full path is used as-is.
+-->
+<ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- ... all of the AVEVA entries, copied unchanged ... -->
+  <string>C:\AVEVA\Custom\MyCompany.E3D.Addin</string>
+</ArrayOfString>

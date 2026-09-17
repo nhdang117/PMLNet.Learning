@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\AVEVA.props" />
+
+  <PropertyGroup>
+    <ProjectGuid>{7A1F3C42-0C4B-4E35-9E2A-1B5D0C7A1003}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MyCompany.E3D.Addin</RootNamespace>
+    <AssemblyName>MyCompany.E3D.Addin</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Launch E3D from Visual Studio so startup exceptions are caught -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>$(AvevaExe)des.exe</StartProgram>
+    <StartArguments>-PROJ=SAM -USER=SYSTEM -PASS=XXXXXX -MDB/SAMPLE</StartArguments>
+    <StartWorkingDirectory>$(DeployDir)</StartWorkingDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Aveva.ApplicationFramework">
+      <HintPath>$(AvevaExe)Aveva.ApplicationFramework.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.ApplicationFramework.Presentation">
+      <HintPath>$(AvevaExe)Aveva.ApplicationFramework.Presentation.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.Core.Database">
+      <HintPath>$(AvevaExe)Aveva.Core.Database.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.Core.Database.Filters">
+      <HintPath>$(AvevaExe)Aveva.Core.Database.Filters.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Aveva.Core.Utilities">
+      <HintPath>$(AvevaExe)Aveva.Core.Utilities.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ElementInfoAddin.cs" />
+    <Compile Include="ShowElementInfoCommand.cs" />
+    <Compile Include="ElementInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="config\DesignAddins.xml" />
+    <None Include="config\DesignCustomization.xml" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <Target Name="DeployToCustomFolder" AfterTargets="Build" Condition="Exists('$(DeployDir)')">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployDir)" ContinueOnError="true" />
+    <Copy SourceFiles="@(_DebugSymbolsIntermediatePath)" DestinationFolder="$(DeployDir)" ContinueOnError="true" />
+  </Target>
+</Project>
